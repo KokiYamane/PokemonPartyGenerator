@@ -20,9 +20,9 @@ class GeneticAlgorithm():
     # 評価関数
     def _eval_chromosome(self, chromosome):
         compatibility_table_part = self.compatibility_table.iloc[chromosome['gene'], :]
-        chromosome['eval'] = compatibility_table_part.mean().mean()
-        if chromosome['eval'] < 0:
-            chromosome['eval'] = 0
+        chromosome['eval'] = compatibility_table_part.mean().mean() + 1024
+        # if chromosome['eval'] < 0:
+        #     chromosome['eval'] = 0
         return chromosome
 
     # エリート選抜
@@ -123,8 +123,12 @@ class GeneticAlgorithm():
 
 
 if __name__ == "__main__":
-    compatibility_table = pd.read_excel(
-        '対面相性表_16x16_20200213.xlsx', index_col=0, header=0, sheet_name=1)
+    # compatibility_table = pd.read_excel(
+    #     '対面相性表_16x16_20200213.xlsx', index_col=0, header=0, sheet_name=0)
+    # compatibility_table = pd.read_excel(
+    #     'pokemon_FFtable.xlsx', index_col=0, header=0, sheet_name=0)
+    compatibility_table = pd.read_csv(
+        '対面相性表_20x20_20201129.csv', index_col=0, header=0)
     geneticAlgorithm = GeneticAlgorithm(
         compatibility_table, n_chromosome=20)
     geneticAlgorithm.calc(n_generation=50, p_mutation=0.1,
